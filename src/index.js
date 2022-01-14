@@ -1,17 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import {createStore} from "redux"
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const add = document.getElementById("add");
+const minus = document.getElementById("minus"); 
+const number = document.querySelector("span");
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+const reducer = () => {}
+const stroe = createStore(reducer)
+
+let count = 0;
+
+// span 초기값 설정
+number.innerText = count;
+
+const undateText = () => {
+  number.innerText = count;
+}
+
+const handleAdd = () => {
+  count = count + 1;
+  undateText();
+} 
+
+const handleMinus = () => {
+  count = count - 1;
+  undateText();
+}
+
+
+add.addEventListener("click", handleAdd);
+minus.addEventListener("click", handleMinus);
