@@ -1,32 +1,39 @@
 import {createStore} from "redux"
 
+
 const add = document.getElementById("add");
 const minus = document.getElementById("minus"); 
 const number = document.querySelector("span");
 
+number.innerText = 0;
 
-const reducer = () => {}
-const stroe = createStore(reducer)
 
-let count = 0;
+const countModifier = (count = 0, action) => {
+  if (action.type === "ADD") {
+    return count + 1;
+  } else if(action.type === "MINUS") {
+    return count - 1;
+  } else {
+    return count;
+  }
+};
 
-// span 초기값 설정
-number.innerText = count;
+const countStore = createStore(countModifier);
 
-const undateText = () => {
-  number.innerText = count;
+const onChange = () => {
+  number.innerText = countStore.getState();
+};
+
+countStore.subscribe(onChange);
+
+const handelAdd = () => {
+  countStore.dispatch({type: "ADD"});
 }
 
-const handleAdd = () => {
-  count = count + 1;
-  undateText();
-} 
-
-const handleMinus = () => {
-  count = count - 1;
-  undateText();
+const handelMinus = () => {
+  countStore.dispatch({type: "MINUS"});
 }
 
 
-add.addEventListener("click", handleAdd);
-minus.addEventListener("click", handleMinus);
+add.addEventListener("click", handelAdd);
+minus.addEventListener("click", handelMinus); 
